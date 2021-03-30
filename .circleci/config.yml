@@ -8,8 +8,16 @@ workflows:
       - run-unit-test:
           requires:
             - static-code-analysis
-#      - deploy-to-staging
-      - deploy-to-prod
+      - deploy-to-staging:
+          requires:
+            - run-unit-test
+      - approve-deploy-prod:
+          type: approval
+          requires:
+            - deploy-to-staging
+      - deploy-to-prod:
+          requires:
+            - approve-deploy-prod
 
 jobs:
   static-code-analysis:
@@ -39,6 +47,16 @@ jobs:
 
       - store_test_results:
           path: ./build/test-results
+
+  deploy-to-staging:
+    docker:
+      - image: circleci/node:8.1.4
+    steps:
+      - checkout
+      - run:
+          name: Deploy Main branch to Heroku
+          command: |
+            git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/sipu-basketball-api-staging.git main
 
   deploy-to-prod:
     docker:
