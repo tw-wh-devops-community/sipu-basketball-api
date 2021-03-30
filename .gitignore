@@ -1,5 +1,6 @@
 .gradle
 /build/
+git branch --set-upstream-to=origin/
 
 # Ignore Gradle GUI config
 gradle-app.setting
