@@ -1,5 +1,6 @@
 .gradle
 /build/
+.idea
 git branch --set-upstream-to=origin/
 
 # Ignore Gradle GUI config
