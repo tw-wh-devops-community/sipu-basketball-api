@@ -8,9 +8,8 @@ workflows:
       - run-unit-test:
           requires:
             - static-code-analysis
-#      - build-docker-image
 #      - deploy-to-staging
-#      - deploy-to-prod
+      - deploy-to-prod
 
 jobs:
   static-code-analysis:
@@ -26,13 +25,13 @@ jobs:
           name: Check dependencies
           command: |
             ./gradlew ossIndexAudit --no-daemon
+
   run-unit-test:
     docker:
       - image: circleci/openjdk:11-jdk
     working_directory: ~/repo
     steps:
       - checkout
-
       - run:
           name: Run test and verify test coverage
           command: |
@@ -40,3 +39,13 @@ jobs:
 
       - store_test_results:
           path: ./build/test-results
+
+  deploy-to-prod:
+    docker:
+      - image: circleci/node:8.1.4
+    steps:
+      - checkout
+      - run:
+          name: Deploy Main branch to Heroku
+          command: |
+            git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/sipu-basketball-api.git main
