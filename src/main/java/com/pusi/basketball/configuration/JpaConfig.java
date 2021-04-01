@@ -16,7 +16,8 @@ public class JpaConfig {
         config.setJdbcUrl("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_f69ed52f06810ff");
         config.setUsername("");
         config.setPassword("");
-        config.setDriverClassName("com.mysql.jdbc.Driver");
+
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setMaximumPoolSize(20);
         config.setMinimumIdle(2);
         config.setIdleTimeout(600000);
