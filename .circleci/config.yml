@@ -45,9 +45,9 @@ jobs:
           command: |
             ./gradlew test
             ./gradlew jacocoTestCoverageVerification
-      - store_test_coverage_results:
+      - store_artifacts:
           path: ./build/jacocoHtml
-      - store_test_results:
+      - store_artifacts:
           path: ./build/test-results
 
   deploy-to-staging:

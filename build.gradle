@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
 
@@ -45,7 +46,9 @@ jacocoTestCoverageVerification {
         rule {
             element = 'CLASS'
             excludes = [
-                'com.pusi.basketball.model.*'
+                'com.pusi.basketball.model.*',
+                'com.pusi.basketball.Application',
+                'com.pusi.basketball.configuration.*'
             ]
             limit {
                 counter = 'INSTRUCTION'
