@@ -13,9 +13,7 @@ public class JpaConfig {
     @Bean
     public DataSource mySQLDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_f69ed52f06810ff");
-        config.setUsername("");
-        config.setPassword("");
+        config.setJdbcUrl(String.format("jdbc:%s", System.getenv("CLEARDB_DATABASE_URL")));
 
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setMaximumPoolSize(20);
