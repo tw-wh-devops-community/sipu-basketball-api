@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 @Entity(name = "`order`")
 public class Order {
     private Long id;
+    private Long userId;
     private BigDecimal amount;
     private String coupon;
 
@@ -17,6 +18,14 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public BigDecimal getAmount() {
