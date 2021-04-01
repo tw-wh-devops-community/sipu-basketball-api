@@ -1,22 +1,8 @@
-package com.pusi.basketball.model;
+package com.pusi.basketball.controller.request;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
-public class User {
-    private Long id;
+public class UserDto {
     private String username;
     private String password;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
-    }
 
     public String getUsername() {
         return username;
