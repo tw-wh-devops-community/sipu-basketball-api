@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Check sytle
           command: |
-            ./gradlew check
+            ./gradlew checkstyleMain
       - run:
           name: Check dependencies
           command: |
@@ -44,7 +44,9 @@ jobs:
           name: Run test and verify test coverage
           command: |
             ./gradlew test
-
+            ./gradlew jacocoTestCoverageVerification
+      - store_test_coverage_results:
+          path: ./build/jacocoHtml
       - store_test_results:
           path: ./build/test-results
 
