@@ -5,6 +5,7 @@ plugins {
     id 'checkstyle'
     id 'org.sonatype.gradle.plugins.scan' version '2.0.0'
     id "org.flywaydb.flyway" version "7.7.1"
+    id 'jacoco'
 }
 
 group = 'com.pusi.basketball'
@@ -26,4 +27,31 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            excludes = [
+                'com.pusi.basketball.model.*'
+            ]
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+        }
+    }
 }
