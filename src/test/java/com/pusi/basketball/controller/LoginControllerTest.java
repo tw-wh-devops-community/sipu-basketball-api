@@ -2,7 +2,7 @@ package com.pusi.basketball.controller;
 
 import com.pusi.basketball.controller.request.UserDto;
 import com.pusi.basketball.model.User;
-import com.pusi.basketball.repository.UserRepository;
+import com.pusi.basketball.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +24,7 @@ class LoginControllerTest {
     private LoginController controller;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Test
     public void should_response_ok_when_username_password_match() {
@@ -35,7 +35,7 @@ class LoginControllerTest {
         User user = new User();
         user.setUsername("testUser");
         user.setPassword(new BCryptPasswordEncoder().encode("testPassword"));
-        doReturn(Optional.of(user)).when(userRepository).findUserByUsername("testUser");
+        doReturn(Optional.of(user)).when(userService).findUserByUsername("testUser");
 
         ResponseEntity<String> responseEntity = controller.login(userDto);
 
@@ -48,7 +48,7 @@ class LoginControllerTest {
         UserDto userDto = new UserDto();
         userDto.setUsername("testUser");
         userDto.setPassword("testPassword");
-        doReturn(Optional.empty()).when(userRepository).findUserByUsername("testUser");
+        doReturn(Optional.empty()).when(userService).findUserByUsername("testUser");
 
         ResponseEntity<String> responseEntity = controller.login(userDto);
 
@@ -65,7 +65,7 @@ class LoginControllerTest {
         User user = new User();
         user.setUsername("testUser");
         user.setPassword("testPassword");
-        doReturn(Optional.of(user)).when(userRepository).findUserByUsername("testUser");
+        doReturn(Optional.of(user)).when(userService).findUserByUsername("testUser");
 
         ResponseEntity<String> responseEntity = controller.login(userDto);
 

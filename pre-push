@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -xe
+
+# run the style check with the gradle wrapper
+./gradlew checkstyleMain
+
+# run the dependencies check with the gradle wrapper
+./gradlew ossIndexAudit --no-daemon
+
+# run the tests with the gradle wrapper
+./gradlew test
+
+# run the test coverage check with the gradle wrapper
+./gradlew jacocoTestCoverageVerification

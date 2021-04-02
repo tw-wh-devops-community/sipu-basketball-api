@@ -1,0 +1,11 @@
+task gitExecutableHooks {
+    Runtime.getRuntime().exec("chmod 755 .git/hooks/pre-push");
+}
+
+task installGitHooks(type: Copy) {
+    from new File(rootProject.rootDir, 'pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks') }
+}
+
+gitExecutableHooks.dependsOn installGitHooks
+clean.dependsOn gitExecutableHooks
