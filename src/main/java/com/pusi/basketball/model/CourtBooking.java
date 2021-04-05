@@ -10,7 +10,7 @@ public class CourtBooking {
     private LocalDate date;
     private Integer hour;
     private String court;
-    private Boolean isFullCourt;
+    private Integer subCourt;
     private Long orderId;
 
     @Id
@@ -21,6 +21,7 @@ public class CourtBooking {
     public void setId(Long id) {
         this.id = id;
     }
+
     public LocalDate getDate() {
         return date;
     }
@@ -45,22 +46,20 @@ public class CourtBooking {
         this.court = court;
     }
 
-    public Boolean getFullCourt() {
-        return isFullCourt;
+    public Integer getSubCourt() {
+        return subCourt;
     }
 
-    public void setFullCourt(Boolean fullCourt) {
-        isFullCourt = fullCourt;
+    public void setSubCourt(Integer subCourt) {
+        this.subCourt = subCourt;
     }
 
     public Long getOrderId() {
         return orderId;
     }
 
-
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
-
 
 }

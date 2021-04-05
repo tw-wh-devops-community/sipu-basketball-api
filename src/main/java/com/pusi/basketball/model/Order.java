@@ -10,6 +10,7 @@ public class Order {
     private Long userId;
     private BigDecimal amount;
     private String coupon;
+    private String status;
 
     @Id
     public Long getId() {
@@ -42,5 +43,13 @@ public class Order {
 
     public void setCoupon(String coupon) {
         this.coupon = coupon;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
