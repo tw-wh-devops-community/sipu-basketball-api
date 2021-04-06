@@ -16,12 +16,12 @@ public class CourtService {
     private final CourtRepository courtRepository;
     private final CourtBookingService courtBookingService;
 
-    public CourtService(CourtRepository courtRepository, CourtBookingService courtBookingService) {
+    public CourtService(final CourtRepository courtRepository, final CourtBookingService courtBookingService) {
         this.courtRepository = courtRepository;
         this.courtBookingService = courtBookingService;
     }
 
-    public List<CourtStatus> getCourtsStatus(String date, Integer startTime, Integer endTime){
+    public List<CourtStatus> getCourtsStatus(final String date, final Integer startTime, final Integer endTime) {
         List<Court> courts = (List<Court>) courtRepository.findAll();
         List<CourtBooking> courtBookings = courtBookingService
                 .findCourtBookingRecordOfGivenTimePeriod(date, startTime, endTime);
@@ -31,7 +31,7 @@ public class CourtService {
                 .map(courtBooking -> courtBooking.getCourt() + courtBooking.getSubCourt())
                 .collect(Collectors.toSet());
 
-        for(Court court : courts) {
+        for (Court court : courts) {
             CourtStatus courtStatus = new CourtStatus();
             courtStatus.setCourt(court.getCourt());
             courtStatus.setSubCourt(court.getSubCourt());

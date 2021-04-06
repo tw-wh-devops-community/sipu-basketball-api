@@ -15,9 +15,9 @@ import java.util.List;
 @RequestMapping("courts")
 public class CourtController {
 
-    private CourtService courtService;
+    private final CourtService courtService;
 
-    public CourtController(CourtService courtService) {
+    public CourtController(final CourtService courtService) {
         this.courtService = courtService;
     }
 

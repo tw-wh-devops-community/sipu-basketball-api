@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +32,8 @@ class CourtServiceTest {
         String mockDate = "2021-04-06";
         Integer mockStartTime = 9;
         Integer mockEndTime = 12;
-        doReturn(Collections.emptyList()).when(courtBookingService).findCourtBookingRecordOfGivenTimePeriod(mockDate, mockStartTime, mockEndTime);
+        doReturn(Collections.emptyList()).when(courtBookingService)
+                .findCourtBookingRecordOfGivenTimePeriod(mockDate, mockStartTime, mockEndTime);
         Court courtA1 = new Court();
         courtA1.setId(1L);
         courtA1.setCourt("A");

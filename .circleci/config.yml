@@ -29,6 +29,7 @@ jobs:
           name: Check sytle
           command: |
             ./gradlew checkstyleMain
+            ./gradlew checkstyleTest
       - run:
           name: Check dependencies
           command: |

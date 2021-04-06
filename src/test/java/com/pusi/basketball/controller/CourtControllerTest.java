@@ -14,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,5 +45,4 @@ class CourtControllerTest {
         assertEquals(mockEndTime, body.getEndTime());
         assertEquals(1, body.getCourts().size());
     }
-
 }
