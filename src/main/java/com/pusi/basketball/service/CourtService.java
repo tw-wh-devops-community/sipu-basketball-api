@@ -1,0 +1,51 @@
+package com.pusi.basketball.service;
+
+import com.pusi.basketball.controller.response.CourtStatus;
+import com.pusi.basketball.model.Court;
+import com.pusi.basketball.model.CourtBooking;
+import com.pusi.basketball.repository.CourtRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
+public class CourtService {
+
+    private final CourtRepository courtRepository;
+    private final CourtBookingService courtBookingService;
+
+    public CourtService(CourtRepository courtRepository, CourtBookingService courtBookingService) {
+        this.courtRepository = courtRepository;
+        this.courtBookingService = courtBookingService;
+    }
+
+    public List<CourtStatus> getCourtsStatus(String date, Integer startTime, Integer endTime){
+        List<Court> courts = (List<Court>) courtRepository.findAll();
+        List<CourtBooking> courtBookings = courtBookingService
+                .findCourtBookingRecordOfGivenTimePeriod(date, startTime, endTime);
+
+        Set<String> courtHasBookingRecords = courtBookings.
+                stream()
+                .map(courtBooking -> courtBooking.getCourt() + courtBooking.getSubCourt())
+                .collect(Collectors.toSet());
+
+        for(Court court : courts) {
+            CourtStatus courtStatus = new CourtStatus();
+            courtStatus.setCourt(court.getCourt());
+            courtStatus.setSubCourt(court.getSubCourt());
+            courtStatus.setIsAvailable(!courtHasBookingRecords.contains(court.getCourt() + court.getSubCourt()));
+        }
+
+        return courts.stream().map(court -> {
+            CourtStatus courtStatus = new CourtStatus();
+            courtStatus.setCourt(court.getCourt());
+            courtStatus.setSubCourt(court.getSubCourt());
+            courtStatus.setIsAvailable(!courtHasBookingRecords.contains(court.getCourt() + court.getSubCourt()));
+
+            return courtStatus;
+        }).collect(Collectors.toList());
+    }
+
+}
