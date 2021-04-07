@@ -32,13 +32,6 @@ public class CourtService {
                 .map(courtBooking -> courtBooking.getCourt() + courtBooking.getSubCourt())
                 .collect(Collectors.toSet());
 
-        for (Court court : courts) {
-            CourtStatus courtStatus = new CourtStatus();
-            courtStatus.setCourt(court.getCourt());
-            courtStatus.setSubCourt(court.getSubCourt());
-            courtStatus.setIsAvailable(!courtHasBookingRecords.contains(court.getCourt() + court.getSubCourt()));
-        }
-
         return courts.stream().map(court -> {
             CourtStatus courtStatus = new CourtStatus();
             courtStatus.setCourt(court.getCourt());
