@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +33,7 @@ class CourtBookingServiceTest {
                 .findCourtBookingByDateAndHourBetween(date, 9, 12);
 
         List<CourtBooking> courtBookings = courtBookingService.findCourtBookingRecordOfGivenTimePeriod(
-                date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), 9, 12);
+                date, 9, 12);
 
         assertEquals(1, courtBookings.size());
         assertEquals(1L, courtBookings.get(0).getId());

@@ -4,6 +4,7 @@ set -xe
 
 # run the style check with the gradle wrapper
 ./gradlew checkstyleMain
+./gradlew checkstyleTest
 
 # run the dependencies check with the gradle wrapper
 ./gradlew ossIndexAudit --no-daemon

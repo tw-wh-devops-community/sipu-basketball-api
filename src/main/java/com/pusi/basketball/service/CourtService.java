@@ -6,6 +6,7 @@ import com.pusi.basketball.model.CourtBooking;
 import com.pusi.basketball.repository.CourtRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class CourtService {
         this.courtBookingService = courtBookingService;
     }
 
-    public List<CourtStatus> getCourtsStatus(final String date, final Integer startTime, final Integer endTime) {
+    public List<CourtStatus> getCourtsStatus(final LocalDate date, final Integer startTime, final Integer endTime) {
         List<Court> courts = (List<Court>) courtRepository.findAll();
         List<CourtBooking> courtBookings = courtBookingService
                 .findCourtBookingRecordOfGivenTimePeriod(date, startTime, endTime);

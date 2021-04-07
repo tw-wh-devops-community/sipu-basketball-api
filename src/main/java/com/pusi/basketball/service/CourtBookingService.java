@@ -16,7 +16,8 @@ public class CourtBookingService {
         this.courtBookingRepository = courtBookingRepository;
     }
 
-    public List<CourtBooking> findCourtBookingRecordOfGivenTimePeriod(String date, Integer startTime, Integer endTime) {
-        return courtBookingRepository.findCourtBookingByDateAndHourBetween(LocalDate.parse(date), startTime, endTime);
+    public List<CourtBooking> findCourtBookingRecordOfGivenTimePeriod(
+            LocalDate date, Integer startTime, Integer endTime) {
+        return courtBookingRepository.findCourtBookingByDateAndHourBetween(date, startTime, endTime);
     }
 }
