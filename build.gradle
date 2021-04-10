@@ -1,0 +1,76 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'checkstyle'
+    id 'org.sonatype.gradle.plugins.scan' version '2.0.0'
+    id 'jacoco'
+}
+
+apply from: rootProject.file('gradle/install-git-hooks.gradle')
+
+group = 'com.pusi.basketball'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.19'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/model/**',
+                                        '**/type/**',
+                                        '**/Application**',
+                                        '**/configuration/**'])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            excludes = [
+                'com.pusi.basketball.model.*',
+                'com.pusi.basketball.type.*',
+                'com.pusi.basketball.Application',
+                'com.pusi.basketball.configuration.*',
+                'com.pusi.basketball.controller.request.*',
+                'com.pusi.basketball.controller.response.*',
+                'com.pusi.basketball.exception.*'
+            ]
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                // Temporarily remove the minimum deployment uat
+                 minimum = 0.8
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+fileignoreconfig:
+- filename: src/main/java/com/pusi/basketball/configuration/HeaderAuthenticationFilter.java
+  checksum: 0844a18045cbe833a3412370d50e778693354624b9b4a782b8a1b9e5ddaded82
+- filename: src/main/java/com/pusi/basketball/model/User.java
+  checksum: a8d5145eb72e5c5032f0fcf981d8e5f710da6fe5fdee2e24d68f51a63dc07d3c
+- filename: src/main/java/com/pusi/basketball/controller/request/UserDto.java
+  checksum: 28f95a29e7205a6111cc6cd99c2788ac1e025d61130b20a0b22ce5d912a14075
+- filename: src/main/java/com/pusi/basketball/controller/LoginController.java
+  checksum: 004f1d91b0b6a891322aef247881b3ff50bc97f79ac2a44d07b5d3ca3115a3e3
