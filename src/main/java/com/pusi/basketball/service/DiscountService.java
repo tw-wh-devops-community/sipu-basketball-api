@@ -33,6 +33,7 @@ public class DiscountService {
 
 
         response.setCouponDiscount(getCouponDiscount(response));
+        calAmount(response);
     }
 
     public static BigDecimal getCouponDiscount(OrderResponse response) {
