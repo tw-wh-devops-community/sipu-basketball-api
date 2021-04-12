@@ -23,22 +23,22 @@ public class DiscountService {
     public static void calOrderPrice(OrderResponse response) {
         Integer orderPeriodHour = findOrderPeriodHour(response);
         response.setTimeDiscount(
-            getTimeDiscountByPeriodHour(
-                orderPeriodHour, response.getOriginalAmount()
-            )
+                getTimeDiscountByPeriodHour(
+                        orderPeriodHour, response.getOriginalAmount()
+                )
         );
     }
 
     public static BigDecimal getTimeDiscountByPeriodHour(Integer orderPeriodHour, BigDecimal originalAmount) {
-        if(1==orderPeriodHour){
+        if (1 == orderPeriodHour) {
             return BigDecimal.ZERO;
-        }else if(2==orderPeriodHour){
+        } else if (2 == orderPeriodHour) {
             return originalAmount.multiply(OFF_5).negate();
-        }else if(3==orderPeriodHour){
+        } else if (3 == orderPeriodHour) {
             return originalAmount.multiply(OFF_10).negate();
-        }else if(4==orderPeriodHour){
+        } else if (4 == orderPeriodHour) {
             return originalAmount.multiply(OFF_15).negate();
-        }else{
+        } else {
             return originalAmount.multiply(OFF_20).negate();
         }
     }
