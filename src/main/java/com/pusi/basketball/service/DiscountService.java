@@ -1,9 +1,11 @@
 package com.pusi.basketball.service;
 
+import com.pusi.basketball.controller.response.CourtBookingStatus;
 import com.pusi.basketball.controller.response.OrderResponse;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class DiscountService {
@@ -19,6 +21,30 @@ public class DiscountService {
 
 
     public static void calOrderPrice(OrderResponse response) {
-        // todo
+        Integer orderPeriodHour = findOrderPeriodHour(response);
+        response.setTimeDiscount(
+            getTimeDiscountByPeriodHour(
+                orderPeriodHour, response.getOriginalAmount()
+            )
+        );
+    }
+
+    public static BigDecimal getTimeDiscountByPeriodHour(Integer orderPeriodHour, BigDecimal originalAmount) {
+        if(1==orderPeriodHour){
+            return BigDecimal.ZERO;
+        }else if(2==orderPeriodHour){
+            return originalAmount.multiply(OFF_5).negate();
+        }else if(3==orderPeriodHour){
+            return originalAmount.multiply(OFF_10).negate();
+        }else if(4==orderPeriodHour){
+            return originalAmount.multiply(OFF_15).negate();
+        }else{
+            return originalAmount.multiply(OFF_20).negate();
+        }
+    }
+
+    public static Integer findOrderPeriodHour(OrderResponse response) {
+        List<CourtBookingStatus> courtList = response.getCourts();
+        return courtList.get(0).getPeriodHour();
     }
 }
