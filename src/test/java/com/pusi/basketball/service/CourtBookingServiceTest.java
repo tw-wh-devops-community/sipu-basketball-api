@@ -1,5 +1,6 @@
 package com.pusi.basketball.service;
 
+import com.pusi.basketball.controller.request.OrderDto;
 import com.pusi.basketball.controller.response.CourtBookingStatus;
 import com.pusi.basketball.model.Court;
 import com.pusi.basketball.model.CourtBooking;
@@ -237,12 +238,28 @@ class CourtBookingServiceTest {
     }
 
     @Test
-    public void should_create_single_court_booking_after_order_created() {
-        //TODO
-    }
-
-    @Test
     public void should_create_multiple_court_booking_after_order_created() {
-        //TODO
+        LocalDate mockDate = LocalDate.now();
+        Integer mockStartTime = 9;
+        Integer mockEndTime = 10;
+        OrderDto orderDto = new OrderDto();
+        orderDto.setDate(mockDate);
+        orderDto.setStartTime(mockStartTime);
+        orderDto.setEndTime(mockEndTime);
+        orderDto.setSelectedCourts(Arrays.asList(1L, 2L));
+        Court court1 = new Court();
+        court1.setId(1L);
+        Court court2 = new Court();
+        court2.setId(2L);
+        doReturn(Optional.of(court1)).when(courtRepository).findById(1L);
+        doReturn(Optional.of(court2)).when(courtRepository).findById(2L);
+
+        courtBookingService.createCourtBookings(1L, orderDto);
+
+        verify(courtBookingRepository, times(1)).saveAll(courtBookingArgumentCaptor.capture());
+        List<CourtBooking> courtBookings = courtBookingArgumentCaptor.getValue();
+        assertEquals(2, courtBookings.size());
+        assertEquals(1L, courtBookings.get(0).getCourt().getId());
+        assertEquals(2L, courtBookings.get(1).getCourt().getId());
     }
 }

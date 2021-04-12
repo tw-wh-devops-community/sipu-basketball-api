@@ -52,7 +52,23 @@ public class CourtBookingService {
     }
 
     public void createCourtBookings(Long orderId, OrderDto orderDto) {
-        //TODO create court booking records
+        List<CourtBooking> courtBookingsToSave = new ArrayList<>();
+        for (int hour = orderDto.getStartTime(); hour < orderDto.getEndTime(); hour++) {
+            int finalHour = hour;
+            orderDto.getSelectedCourts().forEach(courtId -> {
+                CourtBooking courtBooking = new CourtBooking();
+                courtBooking.setDate(orderDto.getDate());
+                courtBooking.setHour(finalHour);
+                courtBooking.setOrderId(orderId);
+                courtBooking.setCourt(courtRepository.findById(courtId).orElseThrow());
+
+                courtBookingsToSave.add(courtBooking);
+            });
+        }
+
+        if (!courtBookingsToSave.isEmpty()) {
+            courtBookingRepository.saveAll(courtBookingsToSave);
+        }
     }
 
     public List<CourtBookingStatus> calPriceByCourtBookingDto(List<CourtBookingDto> bookingDtoList) {
