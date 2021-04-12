@@ -175,5 +175,27 @@ class DiscountServiceTest {
         assertEquals(0, BigDecimal.valueOf(0).compareTo(orderResponse.getTimeDiscount()));
     }
 
+    @Test
+    public void should_set_amount() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-10));
+        orderResponse.setCouponDiscount(BigDecimal.valueOf(-20));
 
+        DiscountService.calAmount(orderResponse);
+
+        assertEquals(0, BigDecimal.valueOf(70).compareTo(orderResponse.getAmount()));
+    }
+
+    @Test
+    public void should_set_amount_small_then_0() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(10));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-10));
+        orderResponse.setCouponDiscount(BigDecimal.valueOf(-20));
+
+        DiscountService.calAmount(orderResponse);
+
+        assertEquals(0, BigDecimal.valueOf(0).compareTo(orderResponse.getAmount()));
+    }
 }

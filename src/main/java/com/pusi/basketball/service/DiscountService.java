@@ -72,6 +72,12 @@ public class DiscountService {
         }
     }
 
+    public static void calAmount(OrderResponse response) {
+        BigDecimal amount = response.getOriginalAmount()
+                .add(response.getCouponDiscount()).add(response.getTimeDiscount());
+        response.setAmount(amount.compareTo(BigDecimal.valueOf(0)) < 0 ? BigDecimal.ZERO : amount);
+    }
+
     public static Integer findOrderPeriodHour(OrderResponse response) {
         List<CourtBookingStatus> courtList = response.getCourts();
         return courtList.get(0).getPeriodHour();
