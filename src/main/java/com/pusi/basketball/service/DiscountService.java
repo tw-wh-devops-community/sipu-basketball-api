@@ -37,6 +37,9 @@ public class DiscountService {
 
     public static BigDecimal getCouponDiscount(OrderResponse response) {
         String coupon = response.getCoupon();
+        if (coupon == null) {
+            return BigDecimal.ZERO;
+        }
         BigDecimal amountTime = response.getTimeDiscount().add(response.getOriginalAmount());
 
         if (coupon.startsWith(Coupon.DIS_10.toString())) {

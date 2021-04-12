@@ -76,6 +76,7 @@ class OrderServiceTest {
 
         Order order = new Order();
         order.setId(1L);
+        order.setCoupon("");
 
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setAmount(BigDecimal.TEN);
