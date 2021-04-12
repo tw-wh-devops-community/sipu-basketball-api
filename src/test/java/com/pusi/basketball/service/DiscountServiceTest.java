@@ -112,4 +112,68 @@ class DiscountServiceTest {
 
         assertEquals(0, BigDecimal.valueOf(-20).compareTo(timeDiscount));
     }
+
+    @Test
+    public void should_return_dis_10() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-20));
+        orderResponse.setCoupon("DIS_10");
+        BigDecimal couponDiscount = DiscountService.getCouponDiscount(orderResponse);
+        assertEquals(0, BigDecimal.valueOf(-8).compareTo(couponDiscount));
+    }
+
+    @Test
+    public void should_return_dis_15() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-20));
+        orderResponse.setCoupon("DIS_15");
+        BigDecimal couponDiscount = DiscountService.getCouponDiscount(orderResponse);
+        assertEquals(0, BigDecimal.valueOf(-12).compareTo(couponDiscount));
+    }
+
+    @Test
+    public void should_return_dis_30() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-20));
+        orderResponse.setCoupon("OFF_30");
+        BigDecimal couponDiscount = DiscountService.getCouponDiscount(orderResponse);
+        assertEquals(0, BigDecimal.valueOf(-30).compareTo(couponDiscount));
+    }
+
+    @Test
+    public void should_return_dis_60() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-20));
+        orderResponse.setCoupon("OFF_60");
+        BigDecimal couponDiscount = DiscountService.getCouponDiscount(orderResponse);
+        assertEquals(0, BigDecimal.valueOf(-60).compareTo(couponDiscount));
+    }
+
+    @Test
+    public void should_return_n_dis_15() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-20));
+        orderResponse.setCoupon("N_DIS_15");
+        BigDecimal couponDiscount = DiscountService.getCouponDiscount(orderResponse);
+        assertEquals(0, BigDecimal.valueOf(-15).compareTo(couponDiscount));
+        assertEquals(0, BigDecimal.valueOf(0).compareTo(orderResponse.getTimeDiscount()));
+    }
+
+    @Test
+    public void should_return_n_dis_30() {
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOriginalAmount(BigDecimal.valueOf(100));
+        orderResponse.setTimeDiscount(BigDecimal.valueOf(-20));
+        orderResponse.setCoupon("N_DIS_30");
+        BigDecimal couponDiscount = DiscountService.getCouponDiscount(orderResponse);
+        assertEquals(0, BigDecimal.valueOf(-30).compareTo(couponDiscount));
+        assertEquals(0, BigDecimal.valueOf(0).compareTo(orderResponse.getTimeDiscount()));
+    }
+
+
 }
