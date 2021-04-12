@@ -60,7 +60,9 @@ public class OrderController {
     @PostMapping
     @Transactional
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderDto orderDto) {
-        //TODO validate create order request body
+        if (!validatorService.validateCreateOrderRequestBody(orderDto)) {
+            return ResponseEntity.badRequest().body(null);
+        }
 
         Order order = orderService.createDraftOrder();
         courtBookingService.createCourtBookings(order.getId(), orderDto);

@@ -94,7 +94,8 @@ class OrderControllerTest {
         Order mockOrder = new Order();
         mockOrder.setId(1L);
         doReturn(mockOrder).when(orderService).createDraftOrder();
-        doNothing().when(courtBookingService).createCourtBookings(any(), any());
+        doNothing().when(courtBookingService).createCourtBookings(mockOrder.getId(), mockOrderDto);
+        doReturn(true).when(validatorService).validateCreateOrderRequestBody(any());
 
         ResponseEntity<OrderResponse> createOrderResponse = orderController.createOrder(mockOrderDto);
 
@@ -106,6 +107,11 @@ class OrderControllerTest {
 
     @Test
     void should_response_bad_request_when_create_draft_order_with_invalid_request_body() {
-        //TODO
+        OrderDto mockOrderDto = new OrderDto();
+        doReturn(false).when(validatorService).validateCreateOrderRequestBody(any());
+
+        ResponseEntity<OrderResponse> createOrderResponse = orderController.createOrder(mockOrderDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST, createOrderResponse.getStatusCode());
     }
 }
