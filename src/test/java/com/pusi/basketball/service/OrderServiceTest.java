@@ -70,13 +70,17 @@ class OrderServiceTest {
 
     @Test
     void should_confirm_order() {
+        CourtBookingStatus courtBookingStatus = new CourtBookingStatus();
+        courtBookingStatus.setPeriodHour(1);
+        courtBookingStatus.setAmount(BigDecimal.TEN);
+
         Order order = new Order();
         order.setId(1L);
 
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setAmount(BigDecimal.TEN);
         List<CourtBookingDto> dtoList = Collections.emptyList();
-        List<CourtBookingStatus> statusList = Collections.emptyList();
+        List<CourtBookingStatus> statusList = Collections.singletonList(courtBookingStatus);
         doReturn(dtoList).when(courtBookingService).getCourtBookingsByOrderId(1L);
         doReturn(statusList).when(courtBookingService).calPriceByCourtBookingDto(dtoList);
 
